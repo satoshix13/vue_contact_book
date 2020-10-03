@@ -1,0 +1,96 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Raleway', sans-serif;
+  line-height: 1.8em;
+  background-color: #344a72;
+ 
+}
+
+#container {
+  margin: 50px auto;
+  width: 800px;
+  padding: 20px;
+  border: 1.5px solid;
+  border-color: black;
+  display: flex;
+}
+
+.left {
+  border-radius: 5px;
+  background-color: white;
+  width: 350px;
+  height: 500px;
+  margin: auto;
+}
+
+
+.right {
+  border-radius: 5px;
+  background-color: #37a08e;
+  width: 350px;
+  height: 500px;
+  margin: auto;
+}
+
+
+
+/****form*****/
+
+.form-wrap {
+  padding: 15px 25px;
+}
+
+
+.form-wrap h1,
+.form-wrap p {
+  text-align: center;
+}
+
+.form-group {
+  margin-top: 15px;
+  
+}
+
+.form-group label{
+  display: block;
+  font-size: 20px;
+  color: black;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.form-group input:focus {
+  background-color: #f2f2f2;
+  border: 2px solid #49c1a2;
+  outline: none;
+}
+
+
+.btn {
+  padding: 10px;
+  text-transform: uppercase;
+}
+
+.form-wrap button {
+  width: 100%;
+  margin-top: 30px;
+  background: #49c1a2;
+  cursor: pointer;
+  color: white;      
+  border: 1px solid #26836b;
+  border-radius: 5px;
+}
+
+.form-wrap button:hover {
+  background: #37a08e;
+}
