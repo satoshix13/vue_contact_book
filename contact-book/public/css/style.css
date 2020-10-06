@@ -11,21 +11,23 @@ body {
  
 }
 
+
+
+
 .container {
   margin: 50px auto;
-  width: 50%;
+  width: 60%;
   padding: 20px;
-  border: 1.5px solid;
-  border-color: black;
   display: flex;
+ 
 }
 
 .left {
   border-radius: 5px;
   background-color: white;
   width: 350px;
-  height: 500px;
-  margin: auto;
+  height: 420px;
+  margin-right: 10px;
 }
 
 
@@ -33,10 +35,14 @@ body {
   border-radius: 5px;
   background-color: #f2f2f2;
   width: 500px;
-  height: 500px;
-  margin: auto;
+  height: auto;
+  margin: 0 auto;
 }
 
+.contactlist {
+  display: flex;
+ 
+}
 
 
 /****form*****/
@@ -106,7 +112,7 @@ body {
 }
 
 .table-wrap {
-  height: 480px;
+  height: auto;
   margin: 10px;
 }
 
@@ -121,6 +127,38 @@ body {
   border-radius: 3px;
 }
 
+
+
 .btn-edit{
   margin-right: 4px;
+  background-color:  #49c1a2;
+  border: 1px solid #26836b;
+  padding: 5px;
+  margin: 2px 5px;
+  border-radius: 4px;
 }
+
+.btn-delete{
+  margin-right: 4px;
+  background-color:#f44336;
+  border: 1px solid black;
+  padding: 5px;
+  margin: 2px 5px;
+  border-radius: 4px;
+}
+
+
+
+
+//***Contact Page****//
+
+.user-info {
+  border: 1px solid;
+  border-color: black;
+  background-color: #37a08e;
+  height: 200px;
+  width: 300px;
+  margin: 20px auto;
+}
+
+
