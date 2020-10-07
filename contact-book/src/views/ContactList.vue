@@ -28,7 +28,7 @@
         <div class="table-wrap">
           <h1>Contacts</h1>
           <ul class="table">
-            <li v-for="(contact,index) in contact_list" :key="index" class="contacts">
+            <li v-for="(contact,index) in contacts" :key="index" class="contacts">
               <div>{{ contact.name }}</div>
               <div>{{ contact.surname }}</div>
               <div>{{ contact.tel }}</div>
@@ -57,6 +57,11 @@ export default {
       contact_list: [],
     };
   },
+  computed: {
+    contacts() {
+      return this.$store.getters.getContacts
+    }
+  },
   methods: {
     addContact() {
       let c = this.contact;
@@ -65,7 +70,8 @@ export default {
         return;
       }
       event.preventDefault();
-      this.contact_list.push(this.contact);
+      // this.contact_list.push(this.contact);
+      this.$store.commit("addContact", this.contact)
       this.clearForm();
     },
     clearForm() {
@@ -78,7 +84,8 @@ export default {
     deleteContact(index) {
       let confirmed = confirm("are you sure you want to delete this user");
       if (confirmed) {
-        this.contact_list.splice(index, 1);
+        // this.contact_list.splice(index, 1);
+        this.$store.commit("deleteContact",index)
       } else {
         return;
       }

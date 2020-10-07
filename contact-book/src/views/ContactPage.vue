@@ -25,7 +25,8 @@
               <div>Surname:</div>
               <div>Sanchez</div>
               <div>
-                <button @click="$router.push('/contactpage')" class="btn-edit">Edit</button>
+                <button v-if="!editMode" @click="editContact" class="btn-edit">Edit</button>
+                <button v-else @click="submitChanges" class="btn">Submit</button>
                 <button @click="deleteContact(index)" class="btn-delete">Delete</button>
               </div>
             </li>
@@ -37,6 +38,7 @@
                 <button class="btn-delete">Delete</button>
               </div>
             </li>
+            <li class="contacts"><input type="text">input</li>
             <li class="contacts">
               <button>Step Back</button>
             </li>
@@ -50,7 +52,20 @@
 
 <script>
 export default {
-  name: 'ContactPage'
+  name: 'ContactPage',
+  data(){
+    return {
+      editMode: false
+    }
+  },
+  methods: {
+    editContact(){
+      this.editMode = true
+    },
+    submitChanges(){
+      this.editMode = false
+    }
+  }
 }
 </script>
 
