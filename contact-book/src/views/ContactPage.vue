@@ -3,7 +3,7 @@
     <div class="right">
       <div class="header">
           <button class="btn toContacts" @click="$router.push('/')">CONTACTS</button>
-          <h1> {{ contact.name }} </h1>
+          <h1> User Info </h1>
       </div>
       <div id="contact">
         <input v-model="fieldName" placeholder="fieldname" type="text">
@@ -13,7 +13,7 @@
       <div class="right">
         <div class="table-wrap">
           <ul class="table">
-            <li v-for="(value,key) in contact" :key="key" class="contacts">
+            <li v-for="(value, key) in contact" :key="key" class="contacts">
               <div>{{ key }}:</div>
               <div>{{ value }}</div>
               <div>
@@ -94,9 +94,9 @@ export default {
      let yes = confirm("are you sure you want to delete this contact")
      if(yes){
       let updatedContact = {...this.contact}
-      delete updatedContact(key)
-      console.info(updatedCountact)
-      // this.updateState(updatedContact)
+      delete updatedContact[key]
+      
+      this.updateState(updatedContact)
       // let contacts = this.$store.getters.getContacts
       // let contactIndex = contacts.findIndex(contact => contact.id === this.contact.id)
       // this.$store.commit('deleteContact', contactIndex)
