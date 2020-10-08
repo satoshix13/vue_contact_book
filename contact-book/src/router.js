@@ -15,9 +15,10 @@ export default new Router({
         component: ContactList,
       },
       {
-        path: "/contactpage",
+        path: "/contactpage/:name",
         name: "ContactPage",
         component: ContactPage,
+        props: true,
       }
     ]
 })

@@ -33,7 +33,7 @@
               <div>{{ contact.surname }}</div>
               <div>{{ contact.tel }}</div>
               <div>
-                <button @click="$router.push('/contactpage')" class="btn-edit">info</button>
+                <button @click="$router.push({ name: 'ContactPage', params: { name: contact.name }})" class="btn-edit">info</button>
                 <button @click="deleteContact(index)" class="btn-delete">delete</button>
               </div>
             </li>
@@ -47,19 +47,28 @@
 <script>
 export default {
   name: "ContactList",
+  props: {
+    name: {
+      type: String,
+    }
+  },
   data() {
     return {
       contact: {
+        id: Date.now(),
         name: "",
         surname: "",
         tel: "",
       },
-      contact_list: [],
+
     };
   },
   computed: {
     contacts() {
       return this.$store.getters.getContacts
+    },
+    contactItem(){
+       this.$store.getters.getContact()
     }
   },
   methods: {
@@ -85,7 +94,7 @@ export default {
       let confirmed = confirm("are you sure you want to delete this user");
       if (confirmed) {
         // this.contact_list.splice(index, 1);
-        this.$store.commit("deleteContact",index)
+        this.$store.commit("deleteContact", index)
       } else {
         return;
       }

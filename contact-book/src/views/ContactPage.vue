@@ -3,27 +3,27 @@
     <div class="right">
       <div class="header">
           <button class="btn toContacts" @click="$router.push('/')">CONTACTS</button>
-          <h1>User Info</h1>
+          <h1> {{ contact.name }} </h1>
       </div>
       <div id="contact">
-        <input placeholder="fieldname" type="text">
-        <input placeholder="value" type="text">
-        <button class="btn"> Add </button>
+        <input v-model="fieldName" placeholder="fieldname" type="text">
+        <input v-model="fieldValue" placeholder="value" type="text">
+        <button @click="addField" class="btn"> Add </button>
       </div>
       <div class="right">
         <div class="table-wrap">
           <ul class="table">
-            <li class="contacts">
-              <div>Name:</div>
-              <div>Bob</div>
+            <li v-for="(value,key) in contact" :key="key" class="contacts">
+              <div>{{ key }}:</div>
+              <div>{{ value }}</div>
               <div>
-                <button @click="$router.push('/contactpage')" class="btn-edit">Edit</button>
-                <button @click="deleteContact(index)" class="btn-delete">Delete</button>
+                <button class="btn-edit">Edit</button>
+                <button @click="deleteField(key)" class="btn-delete">Delete</button>
               </div>
             </li>
-            <li class="contacts">
+            <!-- <li class="contacts">
               <div>Surname:</div>
-              <div>Sanchez</div>
+              <div>{{ contact.surname }}</div>
               <div>
                 <button v-if="!editMode" @click="editContact" class="btn-edit">Edit</button>
                 <button v-else @click="submitChanges" class="btn">Submit</button>
@@ -38,8 +38,7 @@
                 <button class="btn-delete">Delete</button>
               </div>
             </li>
-            <li class="contacts"><input type="text">input</li>
-            <li class="contacts">
+            <li class="contacts"> -->
               <button>Step Back</button>
             </li>
           </ul>
@@ -55,15 +54,56 @@ export default {
   name: 'ContactPage',
   data(){
     return {
-      editMode: false
+      editMode: false,
+      fieldName: "",
+      fieldValue: ""
+    }
+  },
+  computed: {
+    contact() {
+       let name = this.$route.params.name
+       return this.$store.getters.getContact(name)
     }
   },
   methods: {
+    updateState(update){
+      let contacts = this.$store.getters.getContacts
+      let contactIndex = contacts.findIndex(contact => contact.id === this.contact.id)
+      this.$store.commit('deleteContact', contactIndex)
+      this.$store.commit('addContact', update)
+    },
     editContact(){
       this.editMode = true
+      console.info(this.contact)
     },
     submitChanges(){
       this.editMode = false
+    },
+    addField(){
+      let key = this.fieldName
+      let value = this.fieldValue
+      let updatedContact = {...this.contact}
+      updatedContact.[key] = this.fieldValue
+      // let contacts = this.$store.getters.getContacts
+      // let contactIndex = contacts.findIndex(contact => contact.id === this.contact.id)
+      // this.$store.commit('deleteContact', contactIndex)
+      // this.$store.commit('addContact', updatedContact)
+      this.updateState(updatedContact)
+    },
+    deleteField(key){
+     let yes = confirm("are you sure you want to delete this contact")
+     if(yes){
+      let updatedContact = {...this.contact}
+      delete updatedContact(key)
+      console.info(updatedCountact)
+      // this.updateState(updatedContact)
+      // let contacts = this.$store.getters.getContacts
+      // let contactIndex = contacts.findIndex(contact => contact.id === this.contact.id)
+      // this.$store.commit('deleteContact', contactIndex)
+      // this.$store.commit('addContact', updatedContact)
+     }else {
+       return
+     }
     }
   }
 }
