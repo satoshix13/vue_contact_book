@@ -14,7 +14,7 @@
       <div class="right">
         <div class="table-wrap">
           <ul class="table">
-            <li v-for="(value, key) in contact" :key="key" class="contacts" :class="{ editOn: editMode}">
+            <li v-for="(value, key) in contact" :key="key" class="contacts" :class="{ editOn: editMode}" v-show="key !== 'id'">
               <div>{{ key }}:</div>
               <div>{{ value }}</div>
               <div>
@@ -22,11 +22,11 @@
                 <button @click="deleteField(key)" class="btn-delete">Delete</button>
               </div>
             </li>
-              <button>Step Back</button>
+              <button @click="cancelChange">Step Back</button>
             </li>
           </ul>
         </div>
-      </div>
+      </div> 
     </div>
   </div>
 </template>
@@ -39,7 +39,8 @@ export default {
     return {
       editMode: false,
       fieldName: "",
-      fieldValue: ""
+      fieldValue: "",
+      previousContact: {},
     }
   },
   computed: {
@@ -59,10 +60,8 @@ export default {
       this.editMode = true
       console.info(this.contact)
     },
-    // submitChanges(){
-    //   this.editMode = false
-    // },
     addField(){
+      this.previousContact = this.contact
       let key = this.fieldName
       let value = this.fieldValue
       let updatedContact = {...this.contact}
@@ -70,6 +69,7 @@ export default {
       this.updateState(updatedContact)
     },
     deleteField(key){
+     this.previousContact = this.contact
      let yes = confirm("are you sure you want to delete this contact")
      if(yes){
       let updatedContact = {...this.contact}
@@ -81,6 +81,7 @@ export default {
      }
     },
     editField(key){
+      this.previousContact = this.contact
       this.editMode = true
       this.fieldName = key
       this.fieldValue = this.contact[key]
@@ -91,6 +92,10 @@ export default {
       let updatedContact = {...this.contact}
       updatedContact.[key] = this.fieldValue
       this.updateState(updatedContact)
+    },
+    cancelChange(){
+      if(Object.keys(this.previousContact).length === 0) return;
+      this.updateState(this.previousContact)
     }
   }
 }
