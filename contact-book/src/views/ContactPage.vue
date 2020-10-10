@@ -41,6 +41,7 @@ export default {
       fieldName: "",
       fieldValue: "",
       previousContact: {},
+      previousKey: "",
     }
   },
   computed: {
@@ -84,12 +85,15 @@ export default {
       this.previousContact = this.contact
       this.editMode = true
       this.fieldName = key
+      this.previousKey = key
       this.fieldValue = this.contact[key]
     },
     submitChanges(){
       this.editMode = false
       let key = this.fieldName
       let updatedContact = {...this.contact}
+      // updatedContact.[this.fieldName] = updatedContact[this.previousKey]
+      delete updatedContact[this.previousKey]
       updatedContact.[key] = this.fieldValue
       this.updateState(updatedContact)
     },
