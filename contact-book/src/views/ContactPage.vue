@@ -3,7 +3,7 @@
     <div class="right" :class="{ rightEditOn: editMode }">
       <div class="header">
           <button class="btn toContacts" @click="$router.push('/')">CONTACTS</button>
-          <h1> User Info </h1>
+          <h1> {{ contact.name }} </h1>
       </div>
       <div id="contact">
         <input :class="{ edit: editMode }" v-model="fieldName" placeholder="fieldname" type="text">
@@ -22,7 +22,7 @@
                 <button @click="deleteField(key)" class="btn-delete">Delete</button>
               </div>
             </li>
-              <button @click="cancelChange">Step Back</button>
+              <button @click="cancelChange" class="btn-edit">Step Back</button>
             </li>
           </ul>
         </div>
@@ -46,8 +46,8 @@ export default {
   },
   computed: {
     contact() {
-       let name = this.$route.params.name
-       return this.$store.getters.getContact(name)
+       let id = this.$route.params.id
+       return this.$store.getters.getContact(id)
     }
   },
   methods: {
@@ -63,10 +63,8 @@ export default {
     },
     addField(){
       this.previousContact = this.contact
-      let key = this.fieldName
-      let value = this.fieldValue
       let updatedContact = {...this.contact}
-      updatedContact.[key] = this.fieldValue
+      updatedContact.[this.fieldName] = this.fieldValue
       this.updateState(updatedContact)
     },
     deleteField(key){
@@ -92,7 +90,6 @@ export default {
       this.editMode = false
       let key = this.fieldName
       let updatedContact = {...this.contact}
-      // updatedContact.[this.fieldName] = updatedContact[this.previousKey]
       delete updatedContact[this.previousKey]
       updatedContact.[key] = this.fieldValue
       this.updateState(updatedContact)
@@ -124,9 +121,6 @@ export default {
   background-color:#49c1a2;
 }
 
-.editOn {
-  
-}
 
 .rightEditOn {
   background-color: #9c9797;

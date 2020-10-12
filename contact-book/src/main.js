@@ -19,8 +19,8 @@ const store = new Vuex.Store({
     getContacts(state){
       return state.contacts
     },
-    getContact:(state) => (name) =>{
-      return state.contacts.find(contact => contact.name === name)
+    getContact:(state) => (id) =>{
+      return state.contacts.find(contact => contact.id === id)
     }
   },
   mutations: {

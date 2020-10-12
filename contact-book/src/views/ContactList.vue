@@ -33,7 +33,7 @@
               <div>{{ contact.surname }}</div>
               <div>{{ contact.tel }}</div>
               <div>
-                <button @click="$router.push({ name: 'ContactPage', params: { name: contact.name }})" class="btn-edit">info</button>
+                <button @click="$router.push({ name: 'ContactPage', params: { id: contact.id }})" class="btn-edit">info</button>
                 <button @click="deleteContact(index)" class="btn-delete">delete</button>
               </div>
             </li>
