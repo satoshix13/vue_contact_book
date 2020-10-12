@@ -7,22 +7,23 @@
           <form>
             <div class="form-group">
               <label for="first-name">First Name</label>
-              <input v-model="contact.name" type="text" id="first-name">
+              <input v-model="contact.name" type="text" id="first-name" required>
             </div>
     
             <div class="form-group">
-              <label for="last-name">Last Name</label>
-              <input v-model="contact.surname" type="text" id="last-name">
+              <label for="last-name">Surname</label>
+              <input v-model="contact.surname" type="text" id="last-name" required>
             </div>
     
             <div class="form-group">
               <label for="telephone">Telephone</label>
               <input v-model.number="contact.tel" type="telephone" id="telephone">
             </div>
-            <button @click="addContact" class="btn">Add Contact</button>
+            <button @click.prevent="addContact" class="btn">Add Contact</button>
           </form>
         </div>
       </div>
+
     
       <div class="right">
         <div class="table-wrap">
@@ -47,11 +48,6 @@
 <script>
 export default {
   name: "ContactList",
-  props: {
-    name: {
-      type: String,
-    }
-  },
   data() {
     return {
       contact: {
@@ -60,9 +56,9 @@ export default {
         surname: "",
         tel: "",
       },
-
     };
   },
+
   computed: {
     contacts() {
       return this.$store.getters.getContacts
@@ -73,15 +69,15 @@ export default {
   },
   methods: {
     addContact() {
-      let c = this.contact;
-      if (c.name === "" || c.surname === "" || c.tel === "") {
-        alert("all fields have to be added");
-        return;
+      let name = this.contact.name.trim()
+      let surname = this.contact.surname.trim()
+      if(name && surname){
+        this.$store.commit("addContact", this.contact)
+        this.clearForm();
+      } else {
+        alert("Name and Surname can't be empty")
       }
-      event.preventDefault();
-      // this.contact_list.push(this.contact);
-      this.$store.commit("addContact", this.contact)
-      this.clearForm();
+  
     },
     clearForm() {
       this.contact = {
@@ -93,7 +89,6 @@ export default {
     deleteContact(index) {
       let confirmed = confirm("are you sure you want to delete this user");
       if (confirmed) {
-        // this.contact_list.splice(index, 1);
         this.$store.commit("deleteContact", index)
       } else {
         return;

@@ -2,16 +2,16 @@
   <div class="container">
     <div class="right" :class="{ rightEditOn: editMode }">
       <div class="header">
-          <button class="btn toContacts" @click="$router.push('/')">CONTACTS</button>
+          <button class="btn btn-edit" @click="$router.push('/')">CONTACTS</button>
           <h1> {{ contact.name }} </h1>
       </div>
-      <div id="contact">
-        <input :class="{ edit: editMode }" v-model="fieldName" placeholder="fieldname" type="text">
-        <input :class="{ edit: editMode }" v-model="fieldValue" placeholder="value" type="text">
-        <button v-if="editMode" @click="submitChanges" class="btn btn-submit"> Submit </button>
-        <button v-else @click="addField" class="btn"> Add </button>
-      </div>
       <div class="right">
+        <div class="header">
+          <input :class="{ edit: editMode }" v-model="fieldName" placeholder="fieldname" type="text">
+          <input :class="{ edit: editMode }" v-model="fieldValue" placeholder="value" type="text">
+          <button v-if="editMode" @click="submitChanges" class="btn btn-submit"> Submit </button>
+          <button v-else @click="addField" class="btn btn-edit"> Add </button>
+        </div>
         <div class="table-wrap">
           <ul class="table">
             <li v-for="(value, key) in contact" :key="key" class="contacts" :class="{ editOn: editMode}" v-show="key !== 'id'">
@@ -57,6 +57,10 @@ export default {
       this.$store.commit('deleteContact', contactIndex)
       this.$store.commit('addContact', update)
     },
+    clearFields(){
+      this.fieldName = ""
+      this.fieldValue = ""
+    },
     editContact(){
       this.editMode = true
       console.info(this.contact)
@@ -66,6 +70,7 @@ export default {
       let updatedContact = {...this.contact}
       updatedContact.[this.fieldName] = this.fieldValue
       this.updateState(updatedContact)
+      this.clearFields()
     },
     deleteField(key){
      this.previousContact = this.contact
@@ -93,6 +98,7 @@ export default {
       delete updatedContact[this.previousKey]
       updatedContact.[key] = this.fieldValue
       this.updateState(updatedContact)
+      this.clearFields()
     },
     cancelChange(){
       if(Object.keys(this.previousContact).length === 0) return;
@@ -111,6 +117,10 @@ export default {
   height: 30px;
   border-radius: 5px;
   margin: 0 5%;
+}
+
+.header {
+  margin-bottom: 30px;
 }
 
 .edit {
